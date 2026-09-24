@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ExtraGas · Gestión de Pedidos</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#/inicio">
+        <img src="assets/img/logo.svg" alt="" width="34" height="34">
+        <span><strong>ExtraGas</strong><small>Gestión de Pedidos</small></span>
+      </a>
+      <nav class="nav-menu">
+        <div class="nav-group">General</div>
+        <a href="#/inicio" data-route="inicio"><i class="bi bi-speedometer2"></i> Inicio</a>
+
+        <div class="nav-group">Ventas</div>
+        <a href="#/pedidos" data-route="pedidos"><i class="bi bi-cart3"></i> Pedidos <span class="badge rounded-pill ms-auto" id="navPendientes"></span></a>
+        <a href="#/clientes" data-route="clientes"><i class="bi bi-people"></i> Clientes</a>
+        <a href="#/cobros" data-route="cobros"><i class="bi bi-cash-coin"></i> Cobros</a>
+
+        <div class="nav-group">Depósito</div>
+        <a href="#/garrafas" data-route="garrafas"><i class="bi bi-fuel-pump"></i> Garrafas</a>
+        <a href="#/productos" data-route="productos"><i class="bi bi-box-seam"></i> Productos y precios</a>
+
+        <div class="nav-group">Compras</div>
+        <a href="#/proveedores" data-route="proveedores"><i class="bi bi-truck"></i> Proveedores</a>
+        <a href="#/recepciones" data-route="recepciones"><i class="bi bi-box-arrow-in-down"></i> Recepciones</a>
+        <a href="#/pagos-proveedores" data-route="pagos-proveedores"><i class="bi bi-wallet2"></i> Pagos a proveedores</a>
+
+        <div class="nav-group">Análisis</div>
+        <a href="#/informes" data-route="informes"><i class="bi bi-bar-chart-line"></i> Informes</a>
+
+        <div class="nav-group admin-only">Sistema</div>
+        <a href="#/usuarios" data-route="usuarios" class="admin-only"><i class="bi bi-person-badge"></i> Usuarios</a>
+        <a href="#/configuracion" data-route="configuracion" class="admin-only"><i class="bi bi-gear"></i> Configuración</a>
+      </nav>
+      <div class="sidebar-foot">
+        <i class="bi bi-info-circle"></i> La facturación se realiza en la web de ARCA.
+      </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="btn btn-icon d-lg-none" id="btnMenu" aria-label="Abrir menú"><i class="bi bi-list"></i></button>
+        <div class="topbar-title">
+          <h1 id="pageTitle">Inicio</h1>
+          <div id="pageCrumb" class="crumb"></div>
+        </div>
+        <div class="topbar-actions">
+          <a href="#/pedidos/nuevo" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline"> Nuevo pedido</span></a>
+          <div class="dropdown">
+            <button class="btn user-btn" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar" id="userAvatar">A</span>
+              <span class="d-none d-md-inline text-start lh-sm">
+                <span id="userName" class="d-block fw-semibold">Usuario</span>
+                <small id="userRole" class="text-body-secondary">Rol</small>
+              </span>
+              <i class="bi bi-chevron-down small"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#/configuracion"><i class="bi bi-gear me-2"></i>Configuración</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#" id="btnLogout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <main id="view" class="content"></main>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toasts"></div>
+
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chartjs/chart.umd.js"></script>
+  <script src="assets/vendor/jspdf/jspdf.umd.min.js"></script>
+  <script src="assets/vendor/jspdf/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/pdf.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/modules/inicio.js"></script>
+  <script src="assets/js/modules/pedidos.js"></script>
+  <script src="assets/js/modules/clientes.js"></script>
+  <script src="assets/js/modules/cobros.js"></script>
+  <script src="assets/js/modules/garrafas.js"></script>
+  <script src="assets/js/modules/productos.js"></script>
+  <script src="assets/js/modules/proveedores.js"></script>
+  <script src="assets/js/modules/recepciones.js"></script>
+  <script src="assets/js/modules/pagos-proveedores.js"></script>
+  <script src="assets/js/modules/informes.js"></script>
+  <script src="assets/js/modules/sistema.js"></script>
+  <script>App.start();</script>
+</body>
+</html>

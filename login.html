@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingresar · ExtraGas</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <section class="login-art">
+      <div class="d-flex align-items-center gap-2"><img src="assets/img/logo.svg" width="40" height="40" alt=""><span class="fs-4 fw-bold">ExtraGas</span></div>
+      <div>
+        <h2>Pedidos, garrafas y cobros en un solo lugar.</h2>
+        <ul class="mt-4">
+          <li><i class="bi bi-check-circle-fill"></i>Pedidos por teléfono, WhatsApp o en el local</li>
+          <li><i class="bi bi-check-circle-fill"></i>Control de garrafas llenas, vacías y en clientes</li>
+          <li><i class="bi bi-check-circle-fill"></i>Cobros en efectivo y transferencia con recibo PDF</li>
+          <li><i class="bi bi-check-circle-fill"></i>Proveedores, recepciones e informes</li>
+        </ul>
+      </div>
+      <small class="text-white-50">Venta de gas envasado, carbón y leña para hogares</small>
+    </section>
+    <section class="login-form">
+      <form id="fLogin" novalidate>
+        <div class="d-md-none d-flex align-items-center gap-2 mb-4"><img src="assets/img/logo.svg" width="36" height="36" alt=""><span class="fs-4 fw-bold">ExtraGas</span></div>
+        <h1 class="h3 fw-bold mb-1">Ingresar</h1>
+        <p class="text-body-secondary mb-4">Accedé con tu usuario del sistema.</p>
+        <div class="mb-3"><label class="form-label" for="usuario">Usuario</label>
+          <div class="input-group"><span class="input-group-text"><i class="bi bi-person"></i></span><input class="form-control" id="usuario" required autocomplete="username" placeholder="admin"></div></div>
+        <div class="mb-2"><label class="form-label" for="clave">Contraseña</label>
+          <div class="input-group"><span class="input-group-text"><i class="bi bi-lock"></i></span><input type="password" class="form-control" id="clave" required autocomplete="current-password"></div></div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check"><input class="form-check-input" type="checkbox" id="rec"><label class="form-check-label small" for="rec">Recordarme</label></div>
+        </div>
+        <div class="alert alert-danger py-2 small d-none" id="err"></div>
+        <button class="btn btn-primary w-100 py-2">Ingresar</button>
+        <p class="text-body-secondary small mt-4 mb-0"><i class="bi bi-info-circle"></i> Prototipo: ingresá con <code>admin</code>, <code>lucia</code> o <code>martin</code> y cualquier contraseña.</p>
+      </form>
+    </section>
+  </div>
+  <script src="assets/js/data.js"></script>
+  <script>
+    document.getElementById('fLogin').addEventListener('submit', e => {
+      e.preventDefault();
+      const u = document.getElementById('usuario').value.trim().toLowerCase();
+      const err = document.getElementById('err');
+      const user = Store.db.usuarios.find(x => x.usuario === u && x.activo);
+      if (!u || !document.getElementById('clave').value) { err.textContent = 'Ingresá usuario y contraseña.'; err.classList.remove('d-none'); return; }
+      if (!user) { err.textContent = 'Usuario o contraseña incorrectos.'; err.classList.remove('d-none'); return; }
+      user.ultimoAcceso = localISO(new Date()); Store.save();
+      try { sessionStorage.setItem('extragas_user', JSON.stringify({ id: user.id })); } catch (ex) { /* sin almacenamiento */ }
+      location.href = 'index.html#/inicio';
+    });
+  </script>
+</body>
+</html>
