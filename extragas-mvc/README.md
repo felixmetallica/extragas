@@ -83,6 +83,7 @@ app/
 assets/                    CSS, JS, imágenes y librerías del navegador
 lib/fpdf/                  Librería FPDF
 database/                  Archivos SQL
+docs/modelo-dominio.md     Modelo de dominio (entidades, relaciones, estados y reglas)
 ```
 
 Flujo de una petición: `index.php` → `App::ejecutar()` busca la ruta en `rutas.php` → comprueba la sesión y el rol →
