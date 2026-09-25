@@ -1,5 +1,9 @@
 # ExtraGas · Sistema de Gestión de Pedidos
 
+> Este repositorio contiene dos versiones del sistema:
+> - **Laravel 13** (raíz del repositorio), documentada abajo.
+> - **PHP puro con MVC, sin frameworks** en [`extragas-mvc/`](extragas-mvc/README.md), con sus archivos SQL en `extragas-mvc/database/`.
+
 Sistema web para una empresa familiar de venta de **gas envasado** (garrafas de 10, 15 y 45 kg), **carbón** (bolsas de 3, 5, 10 y 25 kg) y **leña** (bolsa de 25 kg).
 
 - **PHP 8.3+ · Laravel 13 · MySQL 8 / MariaDB 10.6+**

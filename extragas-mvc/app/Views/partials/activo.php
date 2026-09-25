@@ -1,0 +1,1 @@
+<div class="col-12"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="activo" value="1" id="activo" <?= chk(hay_entrada_vieja() ? viejo('activo') : $valor) ?>><label class="form-check-label" for="activo"><?= e($texto) ?></label></div></div>
