@@ -33,6 +33,9 @@ Sin XAMPP, desde la carpeta del proyecto se puede usar el servidor integrado de 
 php -S localhost:8000 index.php
 ```
 
+> Si una importación anterior falló a mitad de camino, borrar la base `extragas` en phpMyAdmin
+> (pestaña Operaciones → Eliminar la base de datos) antes de volver a importar.
+>
 > Si al importar aparece un error al crear los triggers, ejecutar antes
 > `SET GLOBAL log_bin_trust_function_creators = 1;` con el usuario root.
 

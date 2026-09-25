@@ -1,30 +1,26 @@
 -- =====================================================================
 --  ExtraGas · Sistema de Gestión de Pedidos (PHP MVC)
---  Base de datos MySQL 8 / MariaDB 10.6+
---  Estructura completa + catálogos, productos, datos de la empresa y usuario admin (sin registros de ejemplo)
+--  Base de datos para MySQL 5.7 / 8.x y MariaDB 10.6+
+--  Sin registros de ejemplo (catálogos, productos, empresa y usuario admin)
 --  Generado: 25/09/2026
 --
 --  Importar con phpMyAdmin (pestaña Importar) o por consola:
---      mysql -u root -p < extragas.sql
+--      mysql -u root -p < vacio.sql
 --  El script crea la base "extragas" si no existe.
 -- =====================================================================
 
 SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+SET UNIQUE_CHECKS = 0;
+SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
+SET time_zone = '+00:00';
+
 CREATE DATABASE IF NOT EXISTS `extragas` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `extragas`;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-DROP TABLE IF EXISTS `canales_venta`;
+-- ---------------------------------------------------------------------
+--  1. Tablas y vistas
+-- ---------------------------------------------------------------------
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `canales_venta` (
@@ -38,16 +34,6 @@ CREATE TABLE `canales_venta` (
   UNIQUE KEY `canales_venta_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `canales_venta` WRITE;
-/*!40000 ALTER TABLE `canales_venta` DISABLE KEYS */;
-INSERT INTO `canales_venta` VALUES
-(1,'DOMICILIO','Envío a domicilio','Se entrega en el domicilio del cliente','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'RETIRO_LOCAL','Retira en el local','El cliente pasa a retirar el pedido','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'MOSTRADOR','Venta en mostrador','Venta y entrega inmediata en el local','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `canales_venta` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `cliente_contactos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cliente_contactos` (
@@ -66,12 +52,6 @@ CREATE TABLE `cliente_contactos` (
   CONSTRAINT `cliente_contactos_tipo_contacto_id_foreign` FOREIGN KEY (`tipo_contacto_id`) REFERENCES `tipos_contacto_cliente` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `cliente_contactos` WRITE;
-/*!40000 ALTER TABLE `cliente_contactos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cliente_contactos` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clientes` (
@@ -117,12 +97,6 @@ CREATE TABLE `clientes` (
   CONSTRAINT `clientes_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `clientes` WRITE;
-/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `configuracion_empresa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `configuracion_empresa` (
@@ -142,14 +116,6 @@ CREATE TABLE `configuracion_empresa` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `configuracion_empresa` WRITE;
-/*!40000 ALTER TABLE `configuracion_empresa` DISABLE KEYS */;
-INSERT INTO `configuracion_empresa` VALUES
-(1,'ExtraGas','ExtraGas — Venta de gas envasado, carbón y leña','20-28456123-7','Av. Belgrano 1450','San Miguel de Tucumán','381 421-5566','381 555-1020','contacto@extragas.com.ar','Lun a Sáb de 8 a 20 hs',3,'2026-09-25 00:37:54','2026-09-25 00:37:54');
-/*!40000 ALTER TABLE `configuracion_empresa` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `empleados`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empleados` (
@@ -190,14 +156,6 @@ CREATE TABLE `empleados` (
   CONSTRAINT `empleados_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `empleados` WRITE;
-/*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES
-(1,'Roberto','Medina',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2015-03-01',1,1,NULL,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `estados_garrafa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `estados_garrafa` (
@@ -214,19 +172,6 @@ CREATE TABLE `estados_garrafa` (
   UNIQUE KEY `estados_garrafa_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `estados_garrafa` WRITE;
-/*!40000 ALTER TABLE `estados_garrafa` DISABLE KEYS */;
-INSERT INTO `estados_garrafa` VALUES
-(1,'LLENA','Llena','Llena en depósito, lista para la venta',1,0,'#40c057','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'VACIA','Vacía apta','Vacía en depósito, apta para intercambio',0,0,'#4dabf7','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'EN_CLIENTE','En cliente','En poder de un cliente',0,1,'#9775fa','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'NO_APTA','No apta','Dañada o con prueba hidráulica vencida',0,0,'#fa5252','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(5,'EN_PROVEEDOR','Entregada al proveedor','Entregada vacía al proveedor en un intercambio',0,0,'#adb5bd','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(6,'BAJA','Baja','Descartada definitivamente',0,0,'#495057','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `estados_garrafa` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `estados_pedido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `estados_pedido` (
@@ -242,18 +187,6 @@ CREATE TABLE `estados_pedido` (
   UNIQUE KEY `estados_pedido_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `estados_pedido` WRITE;
-/*!40000 ALTER TABLE `estados_pedido` DISABLE KEYS */;
-INSERT INTO `estados_pedido` VALUES
-(1,'PENDIENTE','Pendiente',NULL,0,'#fab005','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'EN_PREPARACION','En preparación',NULL,0,'#228be6','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'EN_REPARTO','En reparto',NULL,0,'#7950f2','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'ENTREGADO','Entregado',NULL,1,'#40c057','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(5,'CANCELADO','Cancelado',NULL,1,'#868e96','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `estados_pedido` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `formas_pago`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `formas_pago` (
@@ -269,17 +202,6 @@ CREATE TABLE `formas_pago` (
   UNIQUE KEY `formas_pago_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `formas_pago` WRITE;
-/*!40000 ALTER TABLE `formas_pago` DISABLE KEYS */;
-INSERT INTO `formas_pago` VALUES
-(1,'EFECTIVO','Efectivo',NULL,0,1,'2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'TRANSFERENCIA','Transferencia',NULL,1,1,'2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'MERCADO_PAGO','Mercado Pago / QR',NULL,1,1,'2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'DEBITO','Tarjeta de débito',NULL,0,1,'2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `formas_pago` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `garrafas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `garrafas` (
@@ -317,38 +239,6 @@ CREATE TABLE `garrafas` (
   CONSTRAINT `garrafas_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `garrafas` WRITE;
-/*!40000 ALTER TABLE `garrafas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `garrafas` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_garrafas_bi_validate` BEFORE INSERT ON `garrafas` FOR EACH ROW BEGIN
-  DECLARE v_requiere_cliente BOOLEAN;
-
-  SELECT requiere_cliente INTO v_requiere_cliente
-  FROM estados_garrafa
-  WHERE id = NEW.estado_garrafa_id;
-
-  IF v_requiere_cliente IS TRUE AND NEW.cliente_id IS NULL THEN
-    SIGNAL SQLSTATE '45000'
-    SET MESSAGE_TEXT = 'El estado de garrafa requiere un cliente_id';
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `medios_contacto_pedido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `medios_contacto_pedido` (
@@ -362,17 +252,6 @@ CREATE TABLE `medios_contacto_pedido` (
   UNIQUE KEY `medios_contacto_pedido_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `medios_contacto_pedido` WRITE;
-/*!40000 ALTER TABLE `medios_contacto_pedido` DISABLE KEYS */;
-INSERT INTO `medios_contacto_pedido` VALUES
-(1,'TELEFONO','Teléfono','Llamada telefónica','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'WHATSAPP','WhatsApp','Mensaje de WhatsApp','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'PRESENCIAL','En el local','El cliente concurre al establecimiento','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'OTRO','Otro','Redes sociales u otro medio','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `medios_contacto_pedido` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `movimientos_garrafa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movimientos_garrafa` (
@@ -411,32 +290,6 @@ CREATE TABLE `movimientos_garrafa` (
   CONSTRAINT `movimientos_garrafa_tipo_movimiento_id_foreign` FOREIGN KEY (`tipo_movimiento_id`) REFERENCES `tipos_movimiento_garrafa` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `movimientos_garrafa` WRITE;
-/*!40000 ALTER TABLE `movimientos_garrafa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `movimientos_garrafa` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_mov_garrafa_ai` AFTER INSERT ON `movimientos_garrafa` FOR EACH ROW BEGIN
-  UPDATE garrafas
-  SET fecha_ultimo_movimiento = NEW.fecha,
-      estado_garrafa_id = NEW.estado_destino_id
-  WHERE id = NEW.garrafa_id;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `pagos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pagos` (
@@ -470,126 +323,6 @@ CREATE TABLE `pagos` (
   CONSTRAINT `pagos_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `pagos` WRITE;
-/*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_bi` BEFORE INSERT ON `pagos` FOR EACH ROW BEGIN
-  DECLARE v_anio SMALLINT UNSIGNED;
-  DECLARE v_siguiente INT UNSIGNED;
-
-  SET v_anio = YEAR(NEW.fecha);
-
-  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
-  VALUES ('pagos_cliente', 'REC', v_anio, 1)
-  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
-
-  SELECT ultimo_valor INTO v_siguiente
-  FROM secuencias
-  WHERE nombre = 'pagos_cliente' AND anio = v_anio;
-
-  SET NEW.numero_recibo = CONCAT('REC-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_ai` AFTER INSERT ON `pagos` FOR EACH ROW BEGIN
-  IF NEW.pedido_id IS NOT NULL AND NEW.deleted_at IS NULL THEN
-    UPDATE pedidos
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos
-      WHERE pedido_id = NEW.pedido_id AND deleted_at IS NULL
-    )
-    WHERE id = NEW.pedido_id;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_au` AFTER UPDATE ON `pagos` FOR EACH ROW BEGIN
-  IF NEW.pedido_id IS NOT NULL THEN
-    UPDATE pedidos
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos
-      WHERE pedido_id = NEW.pedido_id AND deleted_at IS NULL
-    )
-    WHERE id = NEW.pedido_id;
-  END IF;
-  IF OLD.pedido_id IS NOT NULL AND OLD.pedido_id <> NEW.pedido_id THEN
-    UPDATE pedidos
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos
-      WHERE pedido_id = OLD.pedido_id AND deleted_at IS NULL
-    )
-    WHERE id = OLD.pedido_id;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_ad` AFTER DELETE ON `pagos` FOR EACH ROW BEGIN
-  IF OLD.pedido_id IS NOT NULL THEN
-    UPDATE pedidos
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos
-      WHERE pedido_id = OLD.pedido_id AND deleted_at IS NULL
-    )
-    WHERE id = OLD.pedido_id;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `pagos_proveedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pagos_proveedor` (
@@ -623,126 +356,6 @@ CREATE TABLE `pagos_proveedor` (
   CONSTRAINT `pagos_proveedor_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `pagos_proveedor` WRITE;
-/*!40000 ALTER TABLE `pagos_proveedor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pagos_proveedor` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_bi` BEFORE INSERT ON `pagos_proveedor` FOR EACH ROW BEGIN
-  DECLARE v_anio SMALLINT UNSIGNED;
-  DECLARE v_siguiente INT UNSIGNED;
-
-  SET v_anio = YEAR(NEW.fecha);
-
-  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
-  VALUES ('pagos_proveedor', 'PAG-PROV', v_anio, 1)
-  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
-
-  SELECT ultimo_valor INTO v_siguiente
-  FROM secuencias
-  WHERE nombre = 'pagos_proveedor' AND anio = v_anio;
-
-  SET NEW.numero = CONCAT('PAG-PROV-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_ai` AFTER INSERT ON `pagos_proveedor` FOR EACH ROW BEGIN
-  IF NEW.recepcion_id IS NOT NULL AND NEW.deleted_at IS NULL THEN
-    UPDATE recepciones_proveedor
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos_proveedor
-      WHERE recepcion_id = NEW.recepcion_id AND deleted_at IS NULL
-    )
-    WHERE id = NEW.recepcion_id;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_au` AFTER UPDATE ON `pagos_proveedor` FOR EACH ROW BEGIN
-  IF NEW.recepcion_id IS NOT NULL THEN
-    UPDATE recepciones_proveedor
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos_proveedor
-      WHERE recepcion_id = NEW.recepcion_id AND deleted_at IS NULL
-    )
-    WHERE id = NEW.recepcion_id;
-  END IF;
-  IF OLD.recepcion_id IS NOT NULL AND OLD.recepcion_id <> NEW.recepcion_id THEN
-    UPDATE recepciones_proveedor
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos_proveedor
-      WHERE recepcion_id = OLD.recepcion_id AND deleted_at IS NULL
-    )
-    WHERE id = OLD.recepcion_id;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_ad` AFTER DELETE ON `pagos_proveedor` FOR EACH ROW BEGIN
-  IF OLD.recepcion_id IS NOT NULL THEN
-    UPDATE recepciones_proveedor
-    SET monto_pagado = (
-      SELECT COALESCE(SUM(monto), 0)
-      FROM pagos_proveedor
-      WHERE recepcion_id = OLD.recepcion_id AND deleted_at IS NULL
-    )
-    WHERE id = OLD.recepcion_id;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `pedido_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pedido_items` (
@@ -764,12 +377,6 @@ CREATE TABLE `pedido_items` (
   CONSTRAINT `pedido_items_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `pedido_items` WRITE;
-/*!40000 ALTER TABLE `pedido_items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pedido_items` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `pedidos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pedidos` (
@@ -815,42 +422,6 @@ CREATE TABLE `pedidos` (
   CONSTRAINT `pedidos_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `pedidos` WRITE;
-/*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pedidos_bi` BEFORE INSERT ON `pedidos` FOR EACH ROW BEGIN
-  DECLARE v_anio SMALLINT UNSIGNED;
-  DECLARE v_siguiente INT UNSIGNED;
-
-  SET v_anio = YEAR(NEW.fecha);
-
-  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
-  VALUES ('pedidos', 'PED', v_anio, 1)
-  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
-
-  SELECT ultimo_valor INTO v_siguiente
-  FROM secuencias
-  WHERE nombre = 'pedidos' AND anio = v_anio;
-
-  SET NEW.numero = CONCAT('PED-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `productos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `productos` (
@@ -884,21 +455,6 @@ CREATE TABLE `productos` (
   CONSTRAINT `productos_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `productos` WRITE;
-/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES
-(1,'GAR10','Garrafa 10 kg',NULL,1,10.00,'GARRAFA',16500.00,12800.00,0.00,15.00,1,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(2,'GAR15','Garrafa 15 kg',NULL,1,15.00,'GARRAFA',24000.00,18900.00,0.00,10.00,1,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(3,'GAR45','Garrafa 45 kg',NULL,1,45.00,'GARRAFA',72000.00,58500.00,0.00,4.00,1,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(4,'CAR03','Carbón 3 kg',NULL,2,3.00,'BOLSA',4200.00,2600.00,0.00,15.00,0,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(5,'CAR05','Carbón 5 kg',NULL,2,5.00,'BOLSA',6500.00,4100.00,0.00,15.00,0,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(6,'CAR10','Carbón 10 kg',NULL,2,10.00,'BOLSA',12000.00,7800.00,0.00,10.00,0,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(7,'CAR25','Carbón 25 kg',NULL,2,25.00,'BOLSA',27500.00,18000.00,0.00,4.00,0,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL),
-(8,'LEN25','Leña para hogar 25 kg',NULL,3,25.00,'BOLSA',11500.00,7000.00,0.00,10.00,0,1,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `proveedores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `proveedores` (
@@ -941,12 +497,6 @@ CREATE TABLE `proveedores` (
   CONSTRAINT `proveedores_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `proveedores` WRITE;
-/*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-/*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `provincias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `provincias` (
@@ -960,37 +510,6 @@ CREATE TABLE `provincias` (
   UNIQUE KEY `provincias_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `provincias` WRITE;
-/*!40000 ALTER TABLE `provincias` DISABLE KEYS */;
-INSERT INTO `provincias` VALUES
-(1,'CABA','Ciudad Autónoma de Buenos Aires','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'BA','Buenos Aires','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'CAT','Catamarca','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'CHA','Chaco','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(5,'CHU','Chubut','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(6,'COR','Córdoba','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(7,'CRR','Corrientes','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(8,'ER','Entre Ríos','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(9,'FOR','Formosa','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(10,'JUJ','Jujuy','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(11,'LP','La Pampa','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(12,'LR','La Rioja','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(13,'MZA','Mendoza','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(14,'MIS','Misiones','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(15,'NQN','Neuquén','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(16,'RN','Río Negro','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(17,'SAL','Salta','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(18,'SJ','San Juan','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(19,'SL','San Luis','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(20,'SC','Santa Cruz','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(21,'SF','Santa Fe','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(22,'SE','Santiago del Estero','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(23,'TF','Tierra del Fuego','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(24,'TUC','Tucumán','Argentina','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `provincias` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `recepcion_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recepcion_items` (
@@ -1009,12 +528,6 @@ CREATE TABLE `recepcion_items` (
   CONSTRAINT `recepcion_items_recepcion_id_foreign` FOREIGN KEY (`recepcion_id`) REFERENCES `recepciones_proveedor` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `recepcion_items` WRITE;
-/*!40000 ALTER TABLE `recepcion_items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recepcion_items` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `recepciones_proveedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recepciones_proveedor` (
@@ -1049,42 +562,6 @@ CREATE TABLE `recepciones_proveedor` (
   CONSTRAINT `recepciones_proveedor_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `recepciones_proveedor` WRITE;
-/*!40000 ALTER TABLE `recepciones_proveedor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recepciones_proveedor` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_recepciones_bi` BEFORE INSERT ON `recepciones_proveedor` FOR EACH ROW BEGIN
-  DECLARE v_anio SMALLINT UNSIGNED;
-  DECLARE v_siguiente INT UNSIGNED;
-
-  SET v_anio = YEAR(NEW.fecha);
-
-  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
-  VALUES ('recepciones_proveedor', 'REC-PROV', v_anio, 1)
-  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
-
-  SELECT ultimo_valor INTO v_siguiente
-  FROM secuencias
-  WHERE nombre = 'recepciones_proveedor' AND anio = v_anio;
-
-  SET NEW.numero = CONCAT('REC-PROV-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
@@ -1098,15 +575,6 @@ CREATE TABLE `roles` (
   UNIQUE KEY `roles_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES
-(1,'ADMIN','Administrador','Dueño: acceso total, precios, usuarios y configuración','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'EMPLEADO','Empleado','Atención de pedidos, cobros, garrafas y recepciones','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `secuencias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `secuencias` (
@@ -1121,12 +589,6 @@ CREATE TABLE `secuencias` (
   UNIQUE KEY `uq_secuencias_nombre_anio` (`nombre`,`anio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `secuencias` WRITE;
-/*!40000 ALTER TABLE `secuencias` DISABLE KEYS */;
-/*!40000 ALTER TABLE `secuencias` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `tipos_contacto_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipos_contacto_cliente` (
@@ -1139,17 +601,6 @@ CREATE TABLE `tipos_contacto_cliente` (
   UNIQUE KEY `tipos_contacto_cliente_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `tipos_contacto_cliente` WRITE;
-/*!40000 ALTER TABLE `tipos_contacto_cliente` DISABLE KEYS */;
-INSERT INTO `tipos_contacto_cliente` VALUES
-(1,'CELULAR','Celular','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'TELEFONO_FIJO','Teléfono fijo','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'WHATSAPP','WhatsApp','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'EMAIL','Email','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `tipos_contacto_cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `tipos_movimiento_garrafa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipos_movimiento_garrafa` (
@@ -1163,21 +614,6 @@ CREATE TABLE `tipos_movimiento_garrafa` (
   UNIQUE KEY `tipos_movimiento_garrafa_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `tipos_movimiento_garrafa` WRITE;
-/*!40000 ALTER TABLE `tipos_movimiento_garrafa` DISABLE KEYS */;
-INSERT INTO `tipos_movimiento_garrafa` VALUES
-(1,'ALTA','Alta de envase','Ingreso de una garrafa al parque','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'ENTREGA_CLIENTE','Entrega a cliente','Garrafa llena entregada en un pedido','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'DEVOLUCION_CLIENTE','Devolución de cliente','Envase vacío recibido de un cliente','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(4,'ENTREGA_PROVEEDOR','Entrega a proveedor','Envase vacío entregado al proveedor','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(5,'MARCAR_NO_APTA','Marcada no apta','El envase no está en condiciones','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(6,'REPARACION','Reparación','El envase vuelve a estar apto','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(7,'BAJA','Baja','Descarte definitivo','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(8,'AJUSTE','Ajuste','Corrección por inventario','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `tipos_movimiento_garrafa` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `tipos_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipos_producto` (
@@ -1191,16 +627,6 @@ CREATE TABLE `tipos_producto` (
   UNIQUE KEY `tipos_producto_codigo_unique` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `tipos_producto` WRITE;
-/*!40000 ALTER TABLE `tipos_producto` DISABLE KEYS */;
-INSERT INTO `tipos_producto` VALUES
-(1,'GAS','Gas envasado','Garrafas de 10, 15 y 45 kg','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(2,'CARBON','Carbón','Bolsas de 3, 5, 10 y 25 kg','2026-09-25 03:37:54','2026-09-25 03:37:54'),
-(3,'LENA','Leña','Leña para hogar en bolsa de 25 kg','2026-09-25 03:37:54','2026-09-25 03:37:54');
-/*!40000 ALTER TABLE `tipos_producto` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
@@ -1227,15 +653,6 @@ CREATE TABLE `usuarios` (
   CONSTRAINT `usuarios_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES
-(1,'admin','$2y$12$NtScdie8i3RYfx3EP94TCuoEQNPMNWbJXTxiEcECBn.AU26Ri8SmK','admin@extragas.com.ar',1,1,NULL,'2026-09-25 00:37:54','2026-09-25 00:37:54',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `v_cuenta_corriente_cliente`;
-/*!50001 DROP VIEW IF EXISTS `v_cuenta_corriente_cliente`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_cuenta_corriente_cliente` AS SELECT
@@ -1249,8 +666,6 @@ SET character_set_client = utf8mb4;
   1 AS `haber`,
   1 AS `observaciones` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_garrafas_en_clientes`;
-/*!50001 DROP VIEW IF EXISTS `v_garrafas_en_clientes`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_garrafas_en_clientes` AS SELECT
@@ -1262,8 +677,6 @@ SET character_set_client = utf8mb4;
   1 AS `fecha_ultimo_movimiento`,
   1 AS `dias_en_cliente` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_pagos_por_forma_pago`;
-/*!50001 DROP VIEW IF EXISTS `v_pagos_por_forma_pago`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_pagos_por_forma_pago` AS SELECT
@@ -1273,8 +686,6 @@ SET character_set_client = utf8mb4;
   1 AS `cantidad_pagos`,
   1 AS `monto_total` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_pedidos_resumen`;
-/*!50001 DROP VIEW IF EXISTS `v_pedidos_resumen`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_pedidos_resumen` AS SELECT
@@ -1300,8 +711,6 @@ SET character_set_client = utf8mb4;
   1 AS `saldo`,
   1 AS `estado_pago` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_productos_mas_vendidos`;
-/*!50001 DROP VIEW IF EXISTS `v_productos_mas_vendidos`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_productos_mas_vendidos` AS SELECT
@@ -1315,8 +724,6 @@ SET character_set_client = utf8mb4;
   1 AS `cantidad_devuelta`,
   1 AS `monto_total` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_recepciones_resumen`;
-/*!50001 DROP VIEW IF EXISTS `v_recepciones_resumen`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_recepciones_resumen` AS SELECT
@@ -1336,8 +743,6 @@ SET character_set_client = utf8mb4;
   1 AS `saldo`,
   1 AS `estado_pago` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_regularidad_clientes`;
-/*!50001 DROP VIEW IF EXISTS `v_regularidad_clientes`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_regularidad_clientes` AS SELECT
@@ -1350,8 +755,6 @@ SET character_set_client = utf8mb4;
   1 AS `total_facturado`,
   1 AS `saldo_pendiente` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_saldo_clientes`;
-/*!50001 DROP VIEW IF EXISTS `v_saldo_clientes`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_saldo_clientes` AS SELECT
@@ -1361,8 +764,6 @@ SET character_set_client = utf8mb4;
   1 AS `pedidos_pendientes`,
   1 AS `saldo_total` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_saldo_proveedores`;
-/*!50001 DROP VIEW IF EXISTS `v_saldo_proveedores`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_saldo_proveedores` AS SELECT
@@ -1372,8 +773,6 @@ SET character_set_client = utf8mb4;
   1 AS `recepciones_pendientes`,
   1 AS `saldo_total` */;
 SET character_set_client = @saved_cs_client;
-DROP TABLE IF EXISTS `v_stock_garrafas`;
-/*!50001 DROP VIEW IF EXISTS `v_stock_garrafas`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_stock_garrafas` AS SELECT
@@ -1514,13 +913,464 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- ---------------------------------------------------------------------
+--  2. Datos (las columnas calculadas 'saldo' y 'subtotal' las genera MySQL)
+-- ---------------------------------------------------------------------
 
+-- Datos de `canales_venta`
+INSERT INTO `canales_venta` (`id`, `codigo`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
+('1', 'DOMICILIO', 'Envío a domicilio', 'Se entrega en el domicilio del cliente', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'RETIRO_LOCAL', 'Retira en el local', 'El cliente pasa a retirar el pedido', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'MOSTRADOR', 'Venta en mostrador', 'Venta y entrega inmediata en el local', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `configuracion_empresa`
+INSERT INTO `configuracion_empresa` (`id`, `nombre`, `razon_social`, `cuit`, `direccion`, `localidad`, `telefono`, `whatsapp`, `email`, `horario`, `dias_tolerancia_regularidad`, `created_at`, `updated_at`) VALUES
+('1', 'ExtraGas', 'ExtraGas — Venta de gas envasado, carbón y leña', '20-28456123-7', 'Av. Belgrano 1450', 'San Miguel de Tucumán', '381 421-5566', '381 555-1020', 'contacto@extragas.com.ar', 'Lun a Sáb de 8 a 20 hs', '3', '2026-09-25 02:34:05', '2026-09-25 02:34:05');
+
+-- Datos de `empleados`
+INSERT INTO `empleados` (`id`, `nombre`, `apellido`, `dni`, `cuil`, `telefono`, `email`, `calle`, `numero`, `piso`, `depto`, `ciudad`, `codigo_postal`, `provincia_id`, `fecha_ingreso`, `usuario_id`, `activo`, `observaciones`, `created_at`, `updated_at`, `created_by`, `updated_by`, `deleted_at`) VALUES
+('1', 'Roberto', 'Medina', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-01', '1', '1', NULL, '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL);
+
+-- Datos de `estados_garrafa`
+INSERT INTO `estados_garrafa` (`id`, `codigo`, `nombre`, `descripcion`, `es_disponible_para_venta`, `requiere_cliente`, `color`, `created_at`, `updated_at`) VALUES
+('1', 'LLENA', 'Llena', 'Llena en depósito, lista para la venta', '1', '0', '#40c057', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'VACIA', 'Vacía apta', 'Vacía en depósito, apta para intercambio', '0', '0', '#4dabf7', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'EN_CLIENTE', 'En cliente', 'En poder de un cliente', '0', '1', '#9775fa', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'NO_APTA', 'No apta', 'Dañada o con prueba hidráulica vencida', '0', '0', '#fa5252', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('5', 'EN_PROVEEDOR', 'Entregada al proveedor', 'Entregada vacía al proveedor en un intercambio', '0', '0', '#adb5bd', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('6', 'BAJA', 'Baja', 'Descartada definitivamente', '0', '0', '#495057', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `estados_pedido`
+INSERT INTO `estados_pedido` (`id`, `codigo`, `nombre`, `descripcion`, `es_final`, `color`, `created_at`, `updated_at`) VALUES
+('1', 'PENDIENTE', 'Pendiente', NULL, '0', '#fab005', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'EN_PREPARACION', 'En preparación', NULL, '0', '#228be6', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'EN_REPARTO', 'En reparto', NULL, '0', '#7950f2', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'ENTREGADO', 'Entregado', NULL, '1', '#40c057', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('5', 'CANCELADO', 'Cancelado', NULL, '1', '#868e96', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `formas_pago`
+INSERT INTO `formas_pago` (`id`, `codigo`, `nombre`, `descripcion`, `requiere_referencia`, `activo`, `created_at`, `updated_at`) VALUES
+('1', 'EFECTIVO', 'Efectivo', NULL, '0', '1', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'TRANSFERENCIA', 'Transferencia', NULL, '1', '1', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'MERCADO_PAGO', 'Mercado Pago / QR', NULL, '1', '1', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'DEBITO', 'Tarjeta de débito', NULL, '0', '1', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `medios_contacto_pedido`
+INSERT INTO `medios_contacto_pedido` (`id`, `codigo`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
+('1', 'TELEFONO', 'Teléfono', 'Llamada telefónica', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'WHATSAPP', 'WhatsApp', 'Mensaje de WhatsApp', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'PRESENCIAL', 'En el local', 'El cliente concurre al establecimiento', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'OTRO', 'Otro', 'Redes sociales u otro medio', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `productos`
+INSERT INTO `productos` (`id`, `codigo`, `nombre`, `descripcion`, `tipo_producto_id`, `capacidad_kg`, `unidad_venta`, `precio_actual`, `costo_actual`, `stock_actual`, `stock_minimo`, `maneja_garrafa_individual`, `activo`, `created_at`, `updated_at`, `created_by`, `updated_by`, `deleted_at`) VALUES
+('1', 'GAR10', 'Garrafa 10 kg', NULL, '1', '10.00', 'GARRAFA', '16500.00', '12800.00', '0.00', '15.00', '1', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('2', 'GAR15', 'Garrafa 15 kg', NULL, '1', '15.00', 'GARRAFA', '24000.00', '18900.00', '0.00', '10.00', '1', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('3', 'GAR45', 'Garrafa 45 kg', NULL, '1', '45.00', 'GARRAFA', '72000.00', '58500.00', '0.00', '4.00', '1', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('4', 'CAR03', 'Carbón 3 kg', NULL, '2', '3.00', 'BOLSA', '4200.00', '2600.00', '0.00', '15.00', '0', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('5', 'CAR05', 'Carbón 5 kg', NULL, '2', '5.00', 'BOLSA', '6500.00', '4100.00', '0.00', '15.00', '0', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('6', 'CAR10', 'Carbón 10 kg', NULL, '2', '10.00', 'BOLSA', '12000.00', '7800.00', '0.00', '10.00', '0', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('7', 'CAR25', 'Carbón 25 kg', NULL, '2', '25.00', 'BOLSA', '27500.00', '18000.00', '0.00', '4.00', '0', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL),
+('8', 'LEN25', 'Leña para hogar 25 kg', NULL, '3', '25.00', 'BOLSA', '11500.00', '7000.00', '0.00', '10.00', '0', '1', '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL);
+
+-- Datos de `provincias`
+INSERT INTO `provincias` (`id`, `codigo`, `nombre`, `pais`, `created_at`, `updated_at`) VALUES
+('1', 'CABA', 'Ciudad Autónoma de Buenos Aires', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'BA', 'Buenos Aires', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'CAT', 'Catamarca', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'CHA', 'Chaco', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('5', 'CHU', 'Chubut', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('6', 'COR', 'Córdoba', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('7', 'CRR', 'Corrientes', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('8', 'ER', 'Entre Ríos', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('9', 'FOR', 'Formosa', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('10', 'JUJ', 'Jujuy', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('11', 'LP', 'La Pampa', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('12', 'LR', 'La Rioja', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('13', 'MZA', 'Mendoza', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('14', 'MIS', 'Misiones', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('15', 'NQN', 'Neuquén', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('16', 'RN', 'Río Negro', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('17', 'SAL', 'Salta', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('18', 'SJ', 'San Juan', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('19', 'SL', 'San Luis', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('20', 'SC', 'Santa Cruz', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('21', 'SF', 'Santa Fe', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('22', 'SE', 'Santiago del Estero', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('23', 'TF', 'Tierra del Fuego', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('24', 'TUC', 'Tucumán', 'Argentina', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `roles`
+INSERT INTO `roles` (`id`, `codigo`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
+('1', 'ADMIN', 'Administrador', 'Dueño: acceso total, precios, usuarios y configuración', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'EMPLEADO', 'Empleado', 'Atención de pedidos, cobros, garrafas y recepciones', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `tipos_contacto_cliente`
+INSERT INTO `tipos_contacto_cliente` (`id`, `codigo`, `nombre`, `created_at`, `updated_at`) VALUES
+('1', 'CELULAR', 'Celular', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'TELEFONO_FIJO', 'Teléfono fijo', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'WHATSAPP', 'WhatsApp', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'EMAIL', 'Email', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `tipos_movimiento_garrafa`
+INSERT INTO `tipos_movimiento_garrafa` (`id`, `codigo`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
+('1', 'ALTA', 'Alta de envase', 'Ingreso de una garrafa al parque', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'ENTREGA_CLIENTE', 'Entrega a cliente', 'Garrafa llena entregada en un pedido', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'DEVOLUCION_CLIENTE', 'Devolución de cliente', 'Envase vacío recibido de un cliente', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('4', 'ENTREGA_PROVEEDOR', 'Entrega a proveedor', 'Envase vacío entregado al proveedor', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('5', 'MARCAR_NO_APTA', 'Marcada no apta', 'El envase no está en condiciones', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('6', 'REPARACION', 'Reparación', 'El envase vuelve a estar apto', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('7', 'BAJA', 'Baja', 'Descarte definitivo', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('8', 'AJUSTE', 'Ajuste', 'Corrección por inventario', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `tipos_producto`
+INSERT INTO `tipos_producto` (`id`, `codigo`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
+('1', 'GAS', 'Gas envasado', 'Garrafas de 10, 15 y 45 kg', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('2', 'CARBON', 'Carbón', 'Bolsas de 3, 5, 10 y 25 kg', '2026-09-25 05:34:05', '2026-09-25 05:34:05'),
+('3', 'LENA', 'Leña', 'Leña para hogar en bolsa de 25 kg', '2026-09-25 05:34:05', '2026-09-25 05:34:05');
+
+-- Datos de `usuarios`
+INSERT INTO `usuarios` (`id`, `username`, `password_hash`, `email`, `rol_id`, `activo`, `ultimo_login`, `created_at`, `updated_at`, `created_by`, `updated_by`, `deleted_at`) VALUES
+('1', 'admin', '$2y$12$T5O0iBVq4/ASNbHpQen44OG.bsA7pwXEasqsMJeWN/UfV/8ndZDx6', 'admin@extragas.com.ar', '1', '1', NULL, '2026-09-25 02:34:05', '2026-09-25 02:34:05', NULL, NULL, NULL);
+
+-- ---------------------------------------------------------------------
+--  3. Triggers (se crean al final para no alterar los datos importados)
+-- ---------------------------------------------------------------------
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_garrafas_bi_validate` BEFORE INSERT ON `garrafas` FOR EACH ROW BEGIN
+  DECLARE v_requiere_cliente BOOLEAN;
+
+  SELECT requiere_cliente INTO v_requiere_cliente
+  FROM estados_garrafa
+  WHERE id = NEW.estado_garrafa_id;
+
+  IF v_requiere_cliente IS TRUE AND NEW.cliente_id IS NULL THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'El estado de garrafa requiere un cliente_id';
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_mov_garrafa_ai` AFTER INSERT ON `movimientos_garrafa` FOR EACH ROW BEGIN
+  UPDATE garrafas
+  SET fecha_ultimo_movimiento = NEW.fecha,
+      estado_garrafa_id = NEW.estado_destino_id
+  WHERE id = NEW.garrafa_id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_bi` BEFORE INSERT ON `pagos` FOR EACH ROW BEGIN
+  DECLARE v_anio SMALLINT UNSIGNED;
+  DECLARE v_siguiente INT UNSIGNED;
+
+  SET v_anio = YEAR(NEW.fecha);
+
+  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
+  VALUES ('pagos_cliente', 'REC', v_anio, 1)
+  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
+
+  SELECT ultimo_valor INTO v_siguiente
+  FROM secuencias
+  WHERE nombre = 'pagos_cliente' AND anio = v_anio;
+
+  SET NEW.numero_recibo = CONCAT('REC-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_ai` AFTER INSERT ON `pagos` FOR EACH ROW BEGIN
+  IF NEW.pedido_id IS NOT NULL AND NEW.deleted_at IS NULL THEN
+    UPDATE pedidos
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos
+      WHERE pedido_id = NEW.pedido_id AND deleted_at IS NULL
+    )
+    WHERE id = NEW.pedido_id;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_au` AFTER UPDATE ON `pagos` FOR EACH ROW BEGIN
+  IF NEW.pedido_id IS NOT NULL THEN
+    UPDATE pedidos
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos
+      WHERE pedido_id = NEW.pedido_id AND deleted_at IS NULL
+    )
+    WHERE id = NEW.pedido_id;
+  END IF;
+  IF OLD.pedido_id IS NOT NULL AND OLD.pedido_id <> NEW.pedido_id THEN
+    UPDATE pedidos
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos
+      WHERE pedido_id = OLD.pedido_id AND deleted_at IS NULL
+    )
+    WHERE id = OLD.pedido_id;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_ad` AFTER DELETE ON `pagos` FOR EACH ROW BEGIN
+  IF OLD.pedido_id IS NOT NULL THEN
+    UPDATE pedidos
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos
+      WHERE pedido_id = OLD.pedido_id AND deleted_at IS NULL
+    )
+    WHERE id = OLD.pedido_id;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_bi` BEFORE INSERT ON `pagos_proveedor` FOR EACH ROW BEGIN
+  DECLARE v_anio SMALLINT UNSIGNED;
+  DECLARE v_siguiente INT UNSIGNED;
+
+  SET v_anio = YEAR(NEW.fecha);
+
+  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
+  VALUES ('pagos_proveedor', 'PAG-PROV', v_anio, 1)
+  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
+
+  SELECT ultimo_valor INTO v_siguiente
+  FROM secuencias
+  WHERE nombre = 'pagos_proveedor' AND anio = v_anio;
+
+  SET NEW.numero = CONCAT('PAG-PROV-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_ai` AFTER INSERT ON `pagos_proveedor` FOR EACH ROW BEGIN
+  IF NEW.recepcion_id IS NOT NULL AND NEW.deleted_at IS NULL THEN
+    UPDATE recepciones_proveedor
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos_proveedor
+      WHERE recepcion_id = NEW.recepcion_id AND deleted_at IS NULL
+    )
+    WHERE id = NEW.recepcion_id;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_au` AFTER UPDATE ON `pagos_proveedor` FOR EACH ROW BEGIN
+  IF NEW.recepcion_id IS NOT NULL THEN
+    UPDATE recepciones_proveedor
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos_proveedor
+      WHERE recepcion_id = NEW.recepcion_id AND deleted_at IS NULL
+    )
+    WHERE id = NEW.recepcion_id;
+  END IF;
+  IF OLD.recepcion_id IS NOT NULL AND OLD.recepcion_id <> NEW.recepcion_id THEN
+    UPDATE recepciones_proveedor
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos_proveedor
+      WHERE recepcion_id = OLD.recepcion_id AND deleted_at IS NULL
+    )
+    WHERE id = OLD.recepcion_id;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pagos_proveedor_ad` AFTER DELETE ON `pagos_proveedor` FOR EACH ROW BEGIN
+  IF OLD.recepcion_id IS NOT NULL THEN
+    UPDATE recepciones_proveedor
+    SET monto_pagado = (
+      SELECT COALESCE(SUM(monto), 0)
+      FROM pagos_proveedor
+      WHERE recepcion_id = OLD.recepcion_id AND deleted_at IS NULL
+    )
+    WHERE id = OLD.recepcion_id;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_pedidos_bi` BEFORE INSERT ON `pedidos` FOR EACH ROW BEGIN
+  DECLARE v_anio SMALLINT UNSIGNED;
+  DECLARE v_siguiente INT UNSIGNED;
+
+  SET v_anio = YEAR(NEW.fecha);
+
+  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
+  VALUES ('pedidos', 'PED', v_anio, 1)
+  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
+
+  SELECT ultimo_valor INTO v_siguiente
+  FROM secuencias
+  WHERE nombre = 'pedidos' AND anio = v_anio;
+
+  SET NEW.numero = CONCAT('PED-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `trg_recepciones_bi` BEFORE INSERT ON `recepciones_proveedor` FOR EACH ROW BEGIN
+  DECLARE v_anio SMALLINT UNSIGNED;
+  DECLARE v_siguiente INT UNSIGNED;
+
+  SET v_anio = YEAR(NEW.fecha);
+
+  INSERT INTO secuencias (nombre, prefijo, anio, ultimo_valor)
+  VALUES ('recepciones_proveedor', 'REC-PROV', v_anio, 1)
+  ON DUPLICATE KEY UPDATE ultimo_valor = ultimo_valor + 1;
+
+  SELECT ultimo_valor INTO v_siguiente
+  FROM secuencias
+  WHERE nombre = 'recepciones_proveedor' AND anio = v_anio;
+
+  SET NEW.numero = CONCAT('REC-PROV-', v_anio, '-', LPAD(v_siguiente, 5, '0'));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+SET FOREIGN_KEY_CHECKS = 1;
+SET UNIQUE_CHECKS = 1;
